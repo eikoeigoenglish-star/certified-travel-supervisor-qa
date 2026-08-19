@@ -378,19 +378,21 @@ function startExam() {
     return;
   }
 
-  // 「順番に出題する」は年度の古い順 → 同一年度では問題番号の小さい順。
-  // 「ランダム順に出題する」は問題順だけをシャッフルする。
+  // 出題する問題そのものは、指定された対象範囲から毎回ランダムに抽出する。
+  // そのうえで「順番に出題する」場合だけ、抽出後の問題を
+  // 年度の古い順 → 同一年度では問題番号の小さい順に並べる。
+  // 「ランダム順に出題する」場合は、抽出時のランダム順をそのまま使う。
   // 国内旅行の問題は「選択肢4」など番号自体を参照することがあるため、選択肢順は絶対に変えない。
-  const orderedPool = orderValue === "random"
-    ? shuffle(pool)
-    : [...pool].sort(compareQuestionsSequentially);
+  const selectedQuestions = shuffle(pool).slice(0, questionCount);
 
-  state.questions = orderedPool
-    .slice(0, questionCount)
-    .map(question => ({
-      ...question,
-      displayChoices: [...question.choices]
-    }));
+  const sessionQuestions = orderValue === "sequential"
+    ? selectedQuestions.sort(compareQuestionsSequentially)
+    : selectedQuestions;
+
+  state.questions = sessionQuestions.map(question => ({
+    ...question,
+    displayChoices: [...question.choices]
+  }));
 
   state.answers = {};
   state.currentIndex = 0;
