@@ -5,6 +5,15 @@ const CHOICE_KEYS = [1, 2, 3, 4];
 const CHOICE_MARKERS = ["①", "②", "③", "④"];
 const STORAGE_KEY = "domestic-travel-progress-v1";
 
+// 実際の試験科目順。フィルターと結果表示はこの順序に固定する。
+const OFFICIAL_CATEGORIES = [
+  "旅行業法及びこれに基づく命令",
+  "旅行業約款、運送約款及び宿泊約款",
+  "国内旅行実務"
+];
+
+const PASS_LINE = 60;
+
 // 習得段階。streak（連続正解数）から決まる。
 // 未出題 = 記録なし / ミス = 0 / ヒット = 1 / ダブル = 2 / トリプル = 3
 const STAGES = [
@@ -147,9 +156,19 @@ function renderFilterControls() {
     .filter(Number.isFinite)
     .sort((a, b) => a - b);
 
-  const categories = [...new Set(state.allQuestions.map(question => String(question.category ?? "").trim()))]
-    .filter(Boolean)
-    .sort((a, b) => a.localeCompare(b, "ja"));
+  const categorySet = new Set(
+    state.allQuestions
+      .map(question => String(question.category ?? "").trim())
+      .filter(Boolean)
+  );
+
+  // 公式の試験順を優先し、想定外の科目名があれば末尾へ追加する。
+  const categories = [
+    ...OFFICIAL_CATEGORIES.filter(category => categorySet.has(category)),
+    ...[...categorySet]
+      .filter(category => !OFFICIAL_CATEGORIES.includes(category))
+      .sort((a, b) => a.localeCompare(b, "ja"))
+  ];
 
   const yearArea = document.getElementById("year-options");
   yearArea.innerHTML = "";
@@ -841,12 +860,11 @@ function showResult() {
 
   score.append("得点 ", scoreNum, ` / ${total}`);
 
-  document.getElementById("score-percent").textContent = `正答率 ${percent}%`;
-  document.getElementById("score-sub").textContent =
-    percent === 100 ? "全問正解です。" :
-    percent >= 80 ? "かなり安定しています。" :
-    percent >= 60 ? "ミスした問題を復習すると伸ばせます。" :
-    "ミスした問題を中心にもう一周してみましょう。";
+  document.getElementById("score-percent").textContent = `全体正答率 ${percent}%`;
+
+  const categoryStats = buildCategoryStats(transitions);
+  renderCategoryScores(categoryStats);
+  renderPassJudgement(categoryStats);
 
   const promoted = transitions.filter(
     entry => entry.after === "triple" && entry.before !== "triple"
@@ -862,6 +880,92 @@ function showResult() {
   document.getElementById("score-changes").textContent = changes.join("　／　");
 
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function buildCategoryStats(transitions) {
+  const stats = new Map(
+    OFFICIAL_CATEGORIES.map(category => [category, { category, correct: 0, total: 0, percent: null }])
+  );
+
+  transitions.forEach(entry => {
+    const category = String(entry.question.category ?? "").trim();
+
+    if (!stats.has(category)) {
+      stats.set(category, { category, correct: 0, total: 0, percent: null });
+    }
+
+    const stat = stats.get(category);
+    stat.total += 1;
+    if (entry.isCorrect) stat.correct += 1;
+  });
+
+  stats.forEach(stat => {
+    stat.percent = stat.total > 0
+      ? Math.round((stat.correct / stat.total) * 100)
+      : null;
+  });
+
+  return stats;
+}
+
+function renderCategoryScores(categoryStats) {
+  const area = document.getElementById("category-score-list");
+  area.innerHTML = "";
+
+  OFFICIAL_CATEGORIES.forEach(category => {
+    const stat = categoryStats.get(category) ?? { correct: 0, total: 0, percent: null };
+    const item = document.createElement("li");
+    item.className = "category-score-item";
+
+    const name = document.createElement("span");
+    name.className = "category-score-name";
+    name.textContent = category;
+
+    const score = document.createElement("span");
+    score.className = "category-score-value";
+
+    if (stat.total === 0) {
+      item.classList.add("is-missing");
+      score.textContent = "未出題";
+    } else {
+      const passed = stat.percent >= PASS_LINE;
+      item.classList.add(passed ? "is-pass" : "is-fail");
+      score.textContent = `${stat.correct} / ${stat.total}　${stat.percent}%`;
+    }
+
+    item.append(name, score);
+    area.appendChild(item);
+  });
+}
+
+function renderPassJudgement(categoryStats) {
+  const judgement = document.getElementById("pass-judgement");
+  const title = document.getElementById("pass-judgement-title");
+  const note = document.getElementById("score-sub");
+
+  const officialStats = OFFICIAL_CATEGORIES.map(category => categoryStats.get(category));
+  const allCovered = officialStats.every(stat => stat && stat.total > 0);
+
+  judgement.className = "pass-judgement";
+
+  if (!allCovered) {
+    judgement.classList.add("is-pending");
+    title.textContent = "合格判定対象外";
+    note.textContent = `本試験は3科目すべてで${PASS_LINE}%以上が必要です。今回は未出題の科目があるため、全体の合否判定は行いません。`;
+    return;
+  }
+
+  const passed = officialStats.every(stat => stat.percent >= PASS_LINE);
+
+  if (passed) {
+    judgement.classList.add("is-pass");
+    title.textContent = "合格ライン達成";
+    note.textContent = `3科目すべてで${PASS_LINE}%以上です。`;
+  } else {
+    judgement.classList.add("is-fail");
+    title.textContent = "合格ライン未達";
+    note.textContent = `本試験は3科目すべてで${PASS_LINE}%以上が必要です。`;
+  }
 }
 
 function createResultItem(entry, index) {

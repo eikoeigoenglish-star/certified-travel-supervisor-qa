@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=1.0.0">
+  <link rel="stylesheet" href="style.css?v=1.1.0">
 </head>
 
 <body>
@@ -200,6 +200,15 @@
       </div>
     </section>
 
+    <section class="panel pass-panel" aria-labelledby="pass-judgement-title">
+      <div id="pass-judgement" class="pass-judgement is-pending">
+        <p class="pass-kicker">合格判定</p>
+        <h3 id="pass-judgement-title" class="pass-title">判定中</h3>
+        <p class="pass-rule">3科目すべてで60%以上が合格ライン</p>
+      </div>
+      <ul id="category-score-list" class="category-score-list" aria-label="科目別正答率"></ul>
+    </section>
+
     <section aria-label="各問題の結果">
       <ol id="result-list" class="result-list"></ol>
     </section>
@@ -212,6 +221,6 @@
   </footer>
 </div>
 
-<script src="app.js?v=1.0.0"></script>
+<script src="app.js?v=1.1.0"></script>
 </body>
 </html>
