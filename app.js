@@ -343,6 +343,7 @@ function startExam() {
 
   const yearValue = document.querySelector('input[name="year"]:checked')?.value;
   const countValue = document.querySelector('input[name="count"]:checked')?.value;
+  const orderValue = document.querySelector('input[name="order"]:checked')?.value ?? "sequential";
   const filters = readFilters();
 
   if (!yearValue || !countValue) {
@@ -377,9 +378,14 @@ function startExam() {
     return;
   }
 
-  // 問題順だけをシャッフルする。
+  // 「順番に出題する」は年度の古い順 → 同一年度では問題番号の小さい順。
+  // 「ランダム順に出題する」は問題順だけをシャッフルする。
   // 国内旅行の問題は「選択肢4」など番号自体を参照することがあるため、選択肢順は絶対に変えない。
-  state.questions = shuffle(pool)
+  const orderedPool = orderValue === "random"
+    ? shuffle(pool)
+    : [...pool].sort(compareQuestionsSequentially);
+
+  state.questions = orderedPool
     .slice(0, questionCount)
     .map(question => ({
       ...question,
@@ -471,6 +477,18 @@ function updateAvailableCounts() {
 
   document.getElementById("start-btn").disabled = availableCount === 0;
   clearStartError();
+}
+
+// 年度の古い順 → 同一年度では問題番号の小さい順。
+// 万一同じ年度・問題番号があれば questionId を最後の安定キーとして使う。
+function compareQuestionsSequentially(a, b) {
+  const yearDiff = Number(a.year) - Number(b.year);
+  if (yearDiff !== 0) return yearDiff;
+
+  const questionDiff = Number(a.questionNumber) - Number(b.questionNumber);
+  if (questionDiff !== 0) return questionDiff;
+
+  return Number(a.questionId ?? 0) - Number(b.questionId ?? 0);
 }
 
 // Fisher-Yates shuffle

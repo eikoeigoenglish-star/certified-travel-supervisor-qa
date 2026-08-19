@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=1.1.0">
+  <link rel="stylesheet" href="style.css?v=1.2.0">
 </head>
 
 <body>
@@ -138,6 +138,22 @@
         <input type="radio" id="count-1" name="count" value="1">
         <label class="chip" for="count-1">1問</label>
       </div>
+
+      <div class="order-setting" aria-labelledby="order-heading">
+        <div class="order-setting-head">
+          <h3 id="order-heading" class="order-setting-title">出題順</h3>
+          <p class="panel-note">1つ選択</p>
+        </div>
+
+        <div class="order-switch" role="radiogroup" aria-labelledby="order-heading">
+          <input type="radio" id="order-sequential" name="order" value="sequential" checked>
+          <label for="order-sequential">順番に出題する</label>
+
+          <input type="radio" id="order-random" name="order" value="random">
+          <label for="order-random">ランダム順に出題する</label>
+        </div>
+        <p class="order-note">順番に出題する場合は、年度が古い順、同じ年度では問題番号が小さい順に出題します。</p>
+      </div>
     </section>
 
     <div id="start-error" class="alert" role="alert" hidden></div>
@@ -221,6 +237,6 @@
   </footer>
 </div>
 
-<script src="app.js?v=1.1.0"></script>
+<script src="app.js?v=1.2.0"></script>
 </body>
 </html>
