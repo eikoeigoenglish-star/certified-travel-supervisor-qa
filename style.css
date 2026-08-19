@@ -290,6 +290,91 @@ body {
 }
 
 /* =========================
+   出題順スイッチ
+========================= */
+.order-setting {
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.order-setting-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.order-setting-title {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.order-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: min(100%, 620px);
+  padding: 4px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background-color: var(--surface-3);
+}
+
+.order-switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  clip-path: inset(50%);
+  overflow: hidden;
+}
+
+.order-switch label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  color: var(--text-dim);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.order-switch label:hover {
+  color: var(--text);
+}
+
+.order-switch input:checked + label {
+  background-color: var(--gold-dim);
+  color: var(--gold-bright);
+  box-shadow: inset 0 0 0 1px var(--gold-line);
+}
+
+.order-switch input:focus-visible + label {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.order-note {
+  margin: 9px 0 0;
+  color: var(--text-faint);
+  font-size: 0.78rem;
+  line-height: 1.6;
+}
+
+/* =========================
    ボタン
 ========================= */
 .btn-primary,
@@ -750,6 +835,18 @@ body {
 @media (max-width: 400px) {
   .chip {
     flex-basis: calc(50% - 5px);
+  }
+}
+
+
+@media (max-width: 520px) {
+  .order-switch {
+    grid-template-columns: 1fr;
+    border-radius: var(--radius);
+  }
+
+  .order-switch label {
+    border-radius: calc(var(--radius) - 3px);
   }
 }
 
