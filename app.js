@@ -5,6 +5,12 @@ const CHOICE_KEYS = [1, 2, 3, 4];
 const CHOICE_MARKERS = ["①", "②", "③", "④"];
 const STORAGE_KEY = "domestic-travel-progress-v1";
 
+const CATEGORY_ORDER = [
+  "旅行業法及びこれに基づく命令",
+  "旅行業約款、運送約款及び宿泊約款",
+  "国内旅行実務"
+];
+
 // 習得段階。streak（連続正解数）から決まる。
 // 未出題 = 記録なし / ミス = 0 / ヒット = 1 / ダブル = 2 / トリプル = 3
 const STAGES = [
@@ -149,7 +155,18 @@ function renderFilterControls() {
 
   const categories = [...new Set(state.allQuestions.map(question => String(question.category ?? "").trim()))]
     .filter(Boolean)
-    .sort((a, b) => a.localeCompare(b, "ja"));
+    .sort((a, b) => {
+      const ai = CATEGORY_ORDER.indexOf(a);
+      const bi = CATEGORY_ORDER.indexOf(b);
+
+      if (ai !== -1 || bi !== -1) {
+        if (ai === -1) return 1;
+        if (bi === -1) return -1;
+        return ai - bi;
+      }
+
+      return a.localeCompare(b, "ja");
+    });
 
   const yearArea = document.getElementById("year-options");
   yearArea.innerHTML = "";
@@ -358,14 +375,30 @@ function startExam() {
     return;
   }
 
-  // 問題順だけをシャッフルする。
+  // 出題する問題自体は、対象範囲から毎回ランダムに抽出する。
+  const sampledQuestions = shuffle(pool).slice(0, questionCount);
+
+  // 「順番に出題する」の場合だけ、抽出後の問題を年度→問題番号の昇順に並べる。
+  // 「ランダムに出題する」では、抽出時のランダム順をそのまま使う。
+  const orderValue = document.querySelector('input[name="order"]:checked')?.value ?? "sequential";
+
+  if (orderValue === "sequential") {
+    sampledQuestions.sort((a, b) => {
+      const yearDiff = Number(a.year) - Number(b.year);
+      if (yearDiff !== 0) return yearDiff;
+
+      const questionDiff = Number(a.questionNumber) - Number(b.questionNumber);
+      if (questionDiff !== 0) return questionDiff;
+
+      return Number(a.questionId ?? 0) - Number(b.questionId ?? 0);
+    });
+  }
+
   // 国内旅行の問題は「選択肢4」など番号自体を参照することがあるため、選択肢順は絶対に変えない。
-  state.questions = shuffle(pool)
-    .slice(0, questionCount)
-    .map(question => ({
-      ...question,
-      displayChoices: [...question.choices]
-    }));
+  state.questions = sampledQuestions.map(question => ({
+    ...question,
+    displayChoices: [...question.choices]
+  }));
 
   state.answers = {};
   state.currentIndex = 0;
@@ -835,6 +868,8 @@ function showResult() {
     percent >= 60 ? "ミスした問題を復習すると伸ばせます。" :
     "ミスした問題を中心にもう一周してみましょう。";
 
+  renderPassJudgement(transitions);
+
   const promoted = transitions.filter(
     entry => entry.after === "triple" && entry.before !== "triple"
   ).length;
@@ -849,6 +884,79 @@ function showResult() {
   document.getElementById("score-changes").textContent = changes.join("　／　");
 
   window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function renderPassJudgement(transitions) {
+  const judgement = document.getElementById("pass-judgement");
+  const title = document.getElementById("pass-judgement-title");
+  const rule = judgement?.querySelector(".pass-rule");
+  const list = document.getElementById("category-score-list");
+
+  if (!judgement || !title || !list) return;
+
+  const stats = CATEGORY_ORDER.map(category => {
+    const entries = transitions.filter(entry => entry.question.category === category);
+    const total = entries.length;
+    const correct = entries.filter(entry => entry.isCorrect).length;
+    const percent = total > 0 ? Math.round((correct / total) * 100) : null;
+
+    return { category, total, correct, percent };
+  });
+
+  list.innerHTML = "";
+
+  stats.forEach(stat => {
+    const item = document.createElement("li");
+    item.className = "category-score-item";
+
+    if (stat.total === 0) {
+      item.classList.add("is-not-asked");
+    } else if (stat.percent >= 60) {
+      item.classList.add("is-clear");
+    } else {
+      item.classList.add("is-below");
+    }
+
+    const name = document.createElement("span");
+    name.className = "category-score-name";
+    name.textContent = stat.category;
+
+    const fraction = document.createElement("span");
+    fraction.className = "category-score-fraction";
+    fraction.textContent = stat.total > 0 ? `${stat.correct} / ${stat.total}` : "未出題";
+
+    const percent = document.createElement("span");
+    percent.className = "category-score-percent";
+    percent.textContent = stat.percent === null ? "—" : `${stat.percent}%`;
+
+    const status = document.createElement("span");
+    status.className = "category-score-status";
+    status.textContent = stat.total === 0
+      ? "判定対象外"
+      : stat.percent >= 60
+        ? "60%以上"
+        : "60%未満";
+
+    item.append(name, fraction, percent, status);
+    list.appendChild(item);
+  });
+
+  const allCategoriesAsked = stats.every(stat => stat.total > 0);
+
+  judgement.classList.remove("is-pending", "is-pass", "is-fail", "is-na");
+
+  if (!allCategoriesAsked) {
+    judgement.classList.add("is-na");
+    title.textContent = "合格判定対象外";
+    if (rule) rule.textContent = "3科目すべてが出題されたセッションで判定します";
+    return;
+  }
+
+  const passed = stats.every(stat => stat.percent >= 60);
+
+  judgement.classList.add(passed ? "is-pass" : "is-fail");
+  title.textContent = passed ? "合格ライン達成" : "合格ライン未達";
+  if (rule) rule.textContent = "3科目すべてで60%以上が合格ライン";
 }
 
 function createResultItem(entry, index) {
