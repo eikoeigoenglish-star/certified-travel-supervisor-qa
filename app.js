@@ -109,6 +109,7 @@ async function init() {
     document.getElementById("start-btn").addEventListener("click", startExam);
     document.getElementById("next-btn").addEventListener("click", nextQuestion);
     document.getElementById("back-to-start-btn").addEventListener("click", backToStart);
+    document.getElementById("year-toggle-btn").addEventListener("click", toggleAllYears);
     document.getElementById("category-toggle-btn").addEventListener("click", toggleAllCategories);
     document.getElementById("reset-progress-btn").addEventListener("click", resetProgress);
     document.addEventListener("keydown", handleQuizKeydown);
@@ -171,26 +172,15 @@ function renderFilterControls() {
   const yearArea = document.getElementById("year-options");
   yearArea.innerHTML = "";
 
-  yearArea.appendChild(
-    createFilterChip({
-      type: "radio",
-      name: "year",
-      value: "all",
-      id: "year-all",
-      label: `全部（${years.length}年分）`,
-      checked: true,
-      wide: true
-    })
-  );
-
   years.forEach(year => {
     yearArea.appendChild(
       createFilterChip({
-        type: "radio",
+        type: "checkbox",
         name: "year",
         value: String(year),
         id: `year-${year}`,
-        label: `${year}年度`
+        label: `${year}年度`,
+        checked: true
       })
     );
   });
@@ -213,6 +203,7 @@ function renderFilterControls() {
   });
 
   document.getElementById("total-question-count").textContent = String(state.allQuestions.length);
+  updateYearToggleLabel();
   updateCategoryToggleLabel();
 }
 
@@ -298,6 +289,30 @@ function resetProgress() {
 }
 
 // =======================
+// 年度 一括選択／解除
+// =======================
+function toggleAllYears() {
+  const inputs = [...document.querySelectorAll('input[name="year"]')];
+  const allChecked = inputs.length > 0 && inputs.every(input => input.checked);
+  const next = !allChecked;
+
+  inputs.forEach(input => {
+    input.checked = next;
+  });
+
+  updateYearToggleLabel();
+  updateAvailableCounts();
+}
+
+function updateYearToggleLabel() {
+  const inputs = [...document.querySelectorAll('input[name="year"]')];
+  const allChecked = inputs.length > 0 && inputs.every(input => input.checked);
+
+  document.getElementById("year-toggle-btn").textContent =
+    allChecked ? "すべて解除" : "すべて選択";
+}
+
+// =======================
 // 科目 一括選択／解除
 // =======================
 function toggleAllCategories() {
@@ -324,6 +339,10 @@ function updateCategoryToggleLabel() {
 document.addEventListener("change", event => {
   const name = event.target.name;
 
+  if (name === "year") {
+    updateYearToggleLabel();
+  }
+
   if (name === "category") {
     updateCategoryToggleLabel();
   }
@@ -339,12 +358,16 @@ document.addEventListener("change", event => {
 function startExam() {
   clearStartError();
 
-  const yearValue = document.querySelector('input[name="year"]:checked')?.value;
   const countValue = document.querySelector('input[name="count"]:checked')?.value;
   const filters = readFilters();
 
-  if (!yearValue || !countValue) {
-    showStartError("年度と出題問数を選択してください。");
+  if (filters.years.length === 0) {
+    showStartError("年度を1つ以上選択してください。");
+    return;
+  }
+
+  if (!countValue) {
+    showStartError("出題問数を選択してください。");
     return;
   }
 
@@ -412,10 +435,10 @@ function startExam() {
 // 出題対象の抽出
 // =======================
 function readFilters() {
-  const yearValue = document.querySelector('input[name="year"]:checked')?.value;
-
   return {
-    year: yearValue === "all" ? "all" : Number(yearValue),
+    years: [...document.querySelectorAll('input[name="year"]:checked')]
+      .map(input => Number(input.value))
+      .filter(Number.isFinite),
     categories: [...document.querySelectorAll('input[name="category"]:checked')]
       .map(input => input.value),
     stages: [...document.querySelectorAll('input[name="stage"]:checked')]
@@ -425,10 +448,7 @@ function readFilters() {
 
 function filterQuestions(allQuestions, filters) {
   return allQuestions.filter(question => {
-    const yearMatches =
-      filters.year === "all" || Number(question.year) === filters.year;
-
-    if (!yearMatches) return false;
+    if (!filters.years.includes(Number(question.year))) return false;
 
     if (!filters.categories.includes(String(question.category ?? ""))) return false;
 
@@ -445,7 +465,7 @@ function updateAvailableCounts() {
   const filters = readFilters();
 
   const ready =
-    filters.year !== undefined &&
+    filters.years.length > 0 &&
     filters.categories.length > 0 &&
     filters.stages.length > 0;
 

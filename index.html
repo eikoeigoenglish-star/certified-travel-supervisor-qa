@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=1.4.0">
+  <link rel="stylesheet" href="style.css?v=1.5.0">
 </head>
 
 <body>
@@ -61,9 +61,11 @@
     <section class="panel" aria-labelledby="year-heading">
       <div class="panel-head">
         <h2 id="year-heading" class="panel-title">年度</h2>
-        <p class="panel-note">1つ選択</p>
+        <p class="panel-note">複数選択可</p>
+        <button type="button" id="year-toggle-btn" class="btn-ghost btn-small">すべて解除</button>
       </div>
-      <div id="year-options" class="chip-group" role="radiogroup" aria-labelledby="year-heading"></div>
+      <p class="panel-desc">学習したい年度を選びます。複数年を選んで横断して出題できます。</p>
+      <div id="year-options" class="chip-group" role="group" aria-labelledby="year-heading"></div>
     </section>
 
     <!-- 科目 -->
@@ -233,6 +235,6 @@
   </footer>
 </div>
 
-<script src="app.js?v=1.4.0"></script>
+<script src="app.js?v=1.5.0"></script>
 </body>
 </html>
