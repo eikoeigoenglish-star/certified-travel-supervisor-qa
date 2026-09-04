@@ -428,7 +428,7 @@ function startExam() {
 
   showScreen("screen-quiz");
   renderQuestion();
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  scrollPageTopImmediately();
 }
 
 // =======================
@@ -558,7 +558,13 @@ function renderQuestion() {
   nextButton.textContent =
     state.currentIndex === total - 1 ? "結果を見る" : "次へ";
 
-  questionText.focus({ preventScroll: true });
+  // iPhone / iPad などのタッチ端末では、見出しへの programmatic focus が
+  // ブラウザ側の自動スクロールを誘発し、画面上部のメタ情報を隠すことがある。
+  // キーボード操作を想定する端末だけ、従来どおり問題文へフォーカスを移す。
+  const usesFinePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  if (usesFinePointer) {
+    questionText.focus({ preventScroll: true });
+  }
 }
 
 function updateProgress(current, total) {
@@ -801,7 +807,7 @@ function nextQuestion() {
   if (state.currentIndex < state.questions.length - 1) {
     state.currentIndex += 1;
     renderQuestion();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    scrollPageTopImmediately();
     return;
   }
 
@@ -1102,6 +1108,16 @@ function showScreen(id) {
   });
 
   document.getElementById(id).hidden = false;
+}
+
+// iOS系ブラウザの動的ツールバーとDOM更新のタイミング差でも、
+// 問題画面の先頭（年度・問題番号・科目・進捗区分）が確実に見えるようにする。
+function scrollPageTopImmediately() {
+  window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+  requestAnimationFrame(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  });
 }
 
 // =======================
