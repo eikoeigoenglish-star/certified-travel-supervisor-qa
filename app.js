@@ -1037,10 +1037,182 @@ function createResultItem(entry, index) {
 
   transition.append(fromTag, " → ", toTag);
 
-  body.append(meta, text, answers, transition);
+  const aiPromptButton = createAiPromptCopyButton(question, answer);
+
+  body.append(meta, text, answers, transition, aiPromptButton);
   item.append(badge, body);
 
   return item;
+}
+
+// =======================
+// 生成AI相談プロンプトのコピー
+// 外部サイトは開かず、localStorageにも一切触れない。
+// =======================
+function createAiPromptCopyButton(question, answer) {
+  const button = document.createElement("button");
+  button.type = "button";
+  button.className = "ai-prompt-copy";
+  button.setAttribute("aria-label", "生成AI相談プロンプトをコピー");
+  button.setAttribute("aria-live", "polite");
+
+  const icon = document.createElement("span");
+  icon.className = "copy-icon";
+  icon.setAttribute("aria-hidden", "true");
+
+  const label = document.createElement("span");
+  label.className = "ai-prompt-copy-label";
+  label.textContent = "生成AI相談プロンプト";
+
+  button.append(icon, label);
+
+  let restoreTimer = null;
+
+  button.addEventListener("click", async () => {
+    const prompt = buildAiConsultPrompt(question, answer);
+
+    try {
+      await copyTextToClipboard(prompt);
+      button.classList.remove("is-error");
+      button.classList.add("is-copied");
+      label.textContent = "コピーしました";
+    } catch (error) {
+      console.warn("生成AI相談プロンプトをコピーできませんでした", error);
+      button.classList.remove("is-copied");
+      button.classList.add("is-error");
+      label.textContent = "コピーできませんでした";
+    }
+
+    if (restoreTimer !== null) {
+      window.clearTimeout(restoreTimer);
+    }
+
+    restoreTimer = window.setTimeout(() => {
+      button.classList.remove("is-copied", "is-error");
+      label.textContent = "生成AI相談プロンプト";
+      restoreTimer = null;
+    }, 1800);
+  });
+
+  return button;
+}
+
+function buildAiConsultPrompt(question, answer) {
+  const lines = [
+    "国内旅行業務取扱管理者試験の次の問題を解説してください。",
+    "",
+    "【年度・問題番号】",
+    `${question.year}年度 第${question.questionNumber}問`,
+    "",
+    "【科目】",
+    String(question.category ?? "").trim() || "（科目情報なし）",
+    "",
+    "【問題】",
+    String(question.question ?? "").trim() || "（問題文なし）"
+  ];
+
+  const questionImages = splitImageUrls(question.questionImage);
+  if (questionImages.length > 0) {
+    lines.push("", "【問題画像】", ...questionImages);
+  }
+
+  lines.push("", "【選択肢】");
+
+  question.choices.forEach(choice => {
+    const key = Number(choice.key);
+    const marker = CHOICE_MARKERS[key - 1] ?? String(choice.key ?? "");
+    const choiceText = String(choice.text ?? "").trim();
+    const choiceImages = splitImageUrls(choice.image);
+
+    if (choiceText) {
+      lines.push(`${marker} ${choiceText}`);
+    } else if (choiceImages.length > 0) {
+      lines.push(`${marker} （画像選択肢）`);
+    } else {
+      lines.push(`${marker} （選択肢データなし）`);
+    }
+
+    choiceImages.forEach(url => {
+      lines.push(`   画像: ${url}`);
+    });
+  });
+
+  lines.push(
+    "",
+    "【正解】",
+    formatAnswerFull(question, question.correct),
+    "",
+    "【私の回答】",
+    normalizeKeys(answer).length === 0 ? "未回答" : formatAnswerFull(question, answer),
+    "",
+    "この問題について、正解の理由と各選択肢の正誤を解説してください。",
+    "また、私の回答についても、正解・不正解に応じて判断のポイントを説明してください。",
+    "単なる暗記ではなく、制度趣旨、推論できる考え方、似た規定との違い、覚え方もあれば説明してください。"
+  );
+
+  return lines.join("\n");
+}
+
+function formatAnswerFull(question, keys) {
+  const normalized = normalizeKeys(keys);
+
+  if (normalized.length === 0) return "未回答";
+
+  return normalized
+    .map(key => {
+      const choice = question.choices.find(item => Number(item.key) === key);
+      const marker = CHOICE_MARKERS[key - 1] ?? String(key);
+
+      if (!choice) return marker;
+
+      const text = String(choice.text ?? "").trim();
+      const imageUrls = splitImageUrls(choice.image);
+      const parts = [];
+
+      if (text) parts.push(`${marker} ${text}`);
+      else parts.push(`${marker}${imageUrls.length > 0 ? " （画像選択肢）" : ""}`);
+
+      if (imageUrls.length > 0) {
+        parts.push(`画像: ${imageUrls.join(" / ")}`);
+      }
+
+      return parts.join("\n");
+    })
+    .join("\n");
+}
+
+async function copyTextToClipboard(text) {
+  if (navigator.clipboard?.writeText && window.isSecureContext) {
+    await navigator.clipboard.writeText(text);
+    return;
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = text;
+  textarea.setAttribute("readonly", "");
+  textarea.setAttribute("aria-hidden", "true");
+  textarea.style.position = "fixed";
+  textarea.style.left = "-9999px";
+  textarea.style.top = "0";
+  textarea.style.opacity = "0";
+  textarea.style.fontSize = "16px";
+
+  document.body.appendChild(textarea);
+  textarea.focus();
+  textarea.select();
+  textarea.setSelectionRange(0, textarea.value.length);
+
+  let copied = false;
+
+  try {
+    copied = document.execCommand("copy");
+  } finally {
+    textarea.remove();
+  }
+
+  if (!copied) {
+    throw new Error("Clipboard API と copy コマンドの両方が利用できませんでした。");
+  }
 }
 
 function formatAnswer(question, keys) {
