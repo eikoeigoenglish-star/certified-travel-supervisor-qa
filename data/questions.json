@@ -8600,22 +8600,22 @@
     "choices": [
       {
         "key": 1,
-        "text": "令和2年度（2020年）",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2020/a56_1.png"
       },
       {
         "key": 2,
-        "text": "国内旅行実務",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2020/a56_2.png"
       },
       {
         "key": 3,
-        "text": "国内旅行業務取扱管理者",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2020/a56_3.png"
       },
       {
         "key": 4,
-        "text": "出題",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2020/a56_4.png"
       }
     ],
