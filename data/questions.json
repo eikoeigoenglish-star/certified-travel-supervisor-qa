@@ -2254,22 +2254,22 @@
     "choices": [
       {
         "key": 1,
-        "text": "国内旅行実務",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2018/a60_1.jpg"
       },
       {
         "key": 2,
-        "text": "国内旅行業務取扱管理者",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2018/a60_2.jpg"
       },
       {
         "key": 3,
-        "text": "出題",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2018/a60_3.jpg"
       },
       {
         "key": 4,
-        "text": "グリーン",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2018/a60_4.jpg"
       }
     ],
