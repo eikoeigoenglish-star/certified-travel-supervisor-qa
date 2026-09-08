@@ -5370,22 +5370,22 @@
     "choices": [
       {
         "key": 1,
-        "text": "令和元年度（2019年）",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2019/a57_1.png"
       },
       {
         "key": 2,
-        "text": "国内旅行実務",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2019/a57_2.png"
       },
       {
         "key": 3,
-        "text": "国内旅行業務取扱管理者",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2019/a57_3.png"
       },
       {
         "key": 4,
-        "text": "出題",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2019/a57_4.png"
       }
     ],
@@ -5408,17 +5408,17 @@
     "choices": [
       {
         "key": 1,
-        "text": "令和元年度（2019年）",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2019/a59_1.png"
       },
       {
         "key": 2,
-        "text": "国内旅行実務",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2019/a59_2.png"
       },
       {
         "key": 3,
-        "text": "国内旅行業務取扱管理者",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2019/a59_3.png"
       },
       {
@@ -8714,22 +8714,22 @@
     "choices": [
       {
         "key": 1,
-        "text": "令和2年度（2020年）",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2020/a59_1.png"
       },
       {
         "key": 2,
-        "text": "国内旅行実務",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2020/a59_2.png"
       },
       {
         "key": 3,
-        "text": "国内旅行業務取扱管理者",
+        "text": "者",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2020/a59_3.png"
       },
       {
         "key": 4,
-        "text": "グリーン",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2020/a59_4.png"
       }
     ],
@@ -11906,22 +11906,22 @@
     "choices": [
       {
         "key": 1,
-        "text": "令和3年度（2021年）",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2021/a55_1.jpg"
       },
       {
         "key": 2,
-        "text": "国内旅行実務",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2021/a55_2.jpg"
       },
       {
         "key": 3,
-        "text": "国内旅行業務取扱管理者",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2021/a55_3.jpg"
       },
       {
         "key": 4,
-        "text": "出題",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2021/a55_4.jpg"
       }
     ],
@@ -18518,22 +18518,22 @@
     "choices": [
       {
         "key": 1,
-        "text": "令和5年度（2023年）",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2023/54_1.jpg"
       },
       {
         "key": 2,
-        "text": "国内旅行実務",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2023/54_2.jpg"
       },
       {
         "key": 3,
-        "text": "国内旅行業務取扱管理者",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2023/54_3.jpg"
       },
       {
         "key": 4,
-        "text": "出題",
+        "text": "",
         "image": "https://s3.ap-northeast-1.amazonaws.com/img.kakomonn.com/images/question/kokunairyokou/2023/54_4.jpg"
       }
     ],
@@ -18670,22 +18670,22 @@
     "choices": [
       {
         "key": 1,
-        "text": "令和5年度（2023年）",
+        "text": "",
         "image": null
       },
       {
         "key": 2,
-        "text": "国内旅行実務",
+        "text": "",
         "image": null
       },
       {
         "key": 3,
-        "text": "国内旅行業務取扱管理者",
+        "text": "",
         "image": null
       },
       {
         "key": 4,
-        "text": "グリーン",
+        "text": "",
         "image": null
       }
     ],
@@ -21796,22 +21796,25 @@
     "choices": [
       {
         "key": 1,
-        "text": "令和6年度（2024年）",
+        "text": "配車日が9月1日、配車車両数が1台、1台あたりの所定の運賃及び料金の合計額が100,000円の運送契約において、契約責任者の都合により8月27日（配車日の5日前）に運送契約を解除したときの違約料は30,000円である。
+（注）消費税の計算は行わないものとする。",
         "image": null
       },
       {
         "key": 2,
-        "text": "国内旅行実務",
+        "text": "配車日が9月1日、配車車両数が3台の運送契約において、8月18日（配車日の14日前）に1台の車両の減少を伴う運送契約の内容を変更したときの違約料は不要である。
+（注）「配車車両数の減少を伴う運送契約の内容の変更」は、契約責任者の都合によるものとし、契約責任者からの運送契約の内容の変更について、バス会社はその変更を承諾したものとする。",
         "image": null
       },
       {
         "key": 3,
-        "text": "国内旅行業務取扱管理者",
+        "text": "交替運転者配置料金は、バス会社が運行日の別により定めた交替運転者1人あたりの額を適用する。",
         "image": null
       },
       {
         "key": 4,
-        "text": "交替運転者配置料金は、バス会社が運行日の別により定めた交替運転者1人あたりの額を適用する。",
+        "text": "乗船時刻が8時、下船時刻が乗船当日の16時のフェリーボートで貸切バスを航送する場合、時間制運賃を計算するための航送時間の上限は6時間である。
+（注）このフェリーボートには貸切バスの旅客が乗船するものとする。",
         "image": null
       }
     ],
@@ -21948,22 +21951,22 @@
     "choices": [
       {
         "key": 1,
-        "text": "令和6年度（2024年）",
+        "text": "",
         "image": null
       },
       {
         "key": 2,
-        "text": "国内旅行実務",
+        "text": "",
         "image": null
       },
       {
         "key": 3,
-        "text": "国内旅行業務取扱管理者",
+        "text": "",
         "image": null
       },
       {
         "key": 4,
-        "text": "グリーン",
+        "text": "",
         "image": null
       }
     ],
@@ -25192,17 +25195,20 @@
     "choices": [
       {
         "key": 1,
-        "text": "国内旅行実務",
+        "text": "法令により交代運転者の配置が義務付けられる場合、その他、交替運転者の配置について運送申込者と合意した場合には、交替運転者配置料金は、バス会社が届け出た交替運転者配置料金の下限額以上で計算した額を適用する。",
         "image": null
       },
       {
         "key": 2,
-        "text": "国内旅行業務取扱管理者",
+        "text": "配車日時が8月20日の午前11時、配車車両数が5台、1台あたりの所定の運賃及び料金の合計額が100，000円の運送契約において、契約責任者の都合により8月20日の午前9時（配車日時の2時間前）に1台の車両の減少を伴う運送契約の内容を変更したときの違約料は100，000円である。
+（注1）契約責任者からの運送契約の内容の変更について、バス会社はその変更を承諾したものとする。
+（注2）消費税の計算は行わないものとする。",
         "image": null
       },
       {
         "key": 3,
-        "text": "法令により交代運転者の配置が義務付けられる場合、その他、交替運転者の配置について運送申込者と合意した場合には、交替運転者配置料金は、バス会社が届け出た交替運転者配置料金の下限額以上で計算した額を適用する。",
+        "text": "乗船時刻が9時、下船時刻が乗船当日の18時のフェリーボートで貸切バスを航送する場合、時間制運賃を計算するための航送時間の上限は8時間である。
+（注）このフェリーボートには貸切バスの旅客が乗船するものとする。",
         "image": null
       },
       {
@@ -25382,22 +25388,32 @@
     "choices": [
       {
         "key": 1,
-        "text": "令和7年度（2025年）",
+        "text": "710.キロ＋45.3キロ＝755.4キロ　→　10，670円・・・Ⓐ
+Ⓐ×（1－0.1）＝9，603円　→　9，600円・・・Ⓑ
+Ⓑ×（32人－1人）＝297，600円",
         "image": null
       },
       {
         "key": 2,
-        "text": "国内旅行実務",
+        "text": "710.キロ　→　10，340円・・・Ⓐ
+45.3キロ　→　860円・・・Ⓑ
+（Ⓐ＋Ⓑ）×（1－0.15）＝9，520円・・・Ⓒ
+Ⓒ×（32人－1人）＝295，120円",
         "image": null
       },
       {
         "key": 3,
-        "text": "国内旅行業務取扱管理者",
+        "text": "10.1キロ　→　10，340円・・・Ⓐ
+45.3キロ　→　860円・・・Ⓑ
+（Ⓐ＋Ⓑ）×（1－0.15）＝9，520円・・・Ⓒ
+Ⓒ×32人＝304，640円",
         "image": null
       },
       {
         "key": 4,
-        "text": "グリーン",
+        "text": "710.1キロ＋45.3キロ＝755.4キロ　→　10，670円・・・Ⓐ
+Ⓐ×（1－0.15）＝9，069.5円　→　9，060円・・・Ⓑ
+Ⓑ×（32人－1人）＝280，860円",
         "image": null
       }
     ],
@@ -25420,22 +25436,28 @@
     "choices": [
       {
         "key": 1,
-        "text": "令和7年度（2025年）",
+        "text": "（7，120円＋6，600円）＋1，050円＝14，770円・・・Ⓐ
+Ⓐ×（32人－1人）＝457，870円",
         "image": null
       },
       {
         "key": 2,
-        "text": "国内旅行実務",
+        "text": "（7，120円－530円＋6，600円）＋1，050円＝14，240円・・・Ⓐ
+Ⓐ×（32人－1人）＝441，440円",
         "image": null
       },
       {
         "key": 3,
-        "text": "国内旅行業務取扱管理者",
+        "text": "（7，120円－530円＋6，600円）＋1，050円＝14，240円・・・Ⓐ
+Ⓐ×（1－0.15）＝12，104円　→12，100円・・・Ⓑ
+Ⓑ×（32人－1人）＝375，100円",
         "image": null
       },
       {
         "key": 4,
-        "text": "グリーン",
+        "text": "（7，120円－530円＋6，600円）＋1，050円＝14，240円・・・Ⓐ
+Ⓐ×（1－0.15）＝12，104円　→12，100円・・・Ⓑ
+Ⓑ×32人＝387，200円",
         "image": null
       }
     ],
@@ -25458,22 +25480,25 @@
     "choices": [
       {
         "key": 1,
-        "text": "国内旅行実務",
+        "text": "目的地の到着時刻が15時05分で7，100円の東海道・山陽新幹線の普通車指定席特急券を所持する旅客が、当該新幹線に乗車後、JRの都合により目的地の到着が3時間遅延して18時05分に到着したため当該特急料金の払いもどしを請求した。この場合の払いもどされる額は6，760円である。",
         "image": null
       },
       {
         "key": 2,
-        "text": "国内旅行業務取扱管理者",
+        "text": "使用開始後の普通乗車券は、当該普通乗車券が有効期間内であって不乗区間の営業キロが100キロを超えている場合に限り、当該普通乗車券の購入額からすでに乗車した区間の普通運賃と手数料220円を差し引いた残額が払いもどされる。
+（注）普通乗車券の払いもどしは旅客の都合によるものとする。",
         "image": null
       },
       {
         "key": 3,
-        "text": "グリーン",
+        "text": "7月30日の在来線特急列車のグリーン車に乗車するための特急券とグリーン券が1枚で発行された指定券「収受料金は2，500円（内訳として特急料金1，200円・グリーン料金1，300円）」を所持する旅客が、7月29日に当該指定券の払いもどしを請求した。この場合の払いもどされる額は2，110円である。
+（注）指定券の払いもどしは旅客の都合によるものとする。",
         "image": null
       },
       {
         "key": 4,
-        "text": "目的地の到着時刻が15時05分で7，100円の東海道・山陽新幹線の普通車指定席特急券を所持する旅客が、当該新幹線に乗車後、JRの都合により目的地の到着が3時間遅延して18時05分に到着したため当該特急料金の払いもどしを請求した。この場合の払いもどされる額は6，760円である。",
+        "text": "6月20日が有効期間開始日である2，080円の小児自由席特急券を6月18日に払いもどす場合の払いもどされる額は1，860円である。
+（注）小児自由席特急券の払いもどしは旅客の都合によるものとする。",
         "image": null
       }
     ],
@@ -25496,22 +25521,26 @@
     "choices": [
       {
         "key": 1,
-        "text": "国内旅行実務",
-        "image": null
-      },
-      {
-        "key": 2,
-        "text": "国内旅行業務取扱管理者",
-        "image": null
-      },
-      {
-        "key": 3,
         "text": "ファーストクラスの「フレックス」を適用する航空券は、追加料金を支払うことにより、航空券の名義を変更することができる。",
         "image": null
       },
       {
-        "key": 4,
+        "key": 2,
         "text": "「シンプル」は、期間・路線・便に関係なく、すべてのANA便に設定される運賃である。",
+        "image": null
+      },
+      {
+        "key": 3,
+        "text": "エコノミークラスの「フレックス」を適用して、大人1人、11歳の小児1人、2歳の小児1人の計3人が令和8年7月10日に出発する便に搭乗する場合、大人1人分と小児割引2人分の計3人分の航空券を購入し、3席を使用して搭乗することができる。
+
+（注）年齢は搭乗日現在とする。",
+        "image": null
+      },
+      {
+        "key": 4,
+        "text": "「シンプル」を適用する航空券は、予約便の出発時刻の1時間前までで、変更を希望する便のエコノミークラスに空席があるときに限り、予約便を変更することができる。
+
+（注）予約便の変更は、旅客の都合によるものとする。",
         "image": null
       }
     ],
